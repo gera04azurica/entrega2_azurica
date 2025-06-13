@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tu Carrito</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Noto+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div class="top-header">
+      <div class="logo">
+        <a href="../index.html"><img src="../imagenes/logosilea.png" alt="logo"></a>
+      </div>
+      <div class="buscador">
+        <input type="text" placeholder="Buscar productos...">
+      </div>
+      <div class="iconos">
+        <a href="404.html"><img src="../imagenes/usuario.png" alt="usuario"></a>
+        <a href="carrito.html"><img src="../imagenes/carrito.png" alt="carrito"></a>
+        <span class="menu-toggle">&#9776;</span>
+      </div>
+    </div>
+    <nav class="menu-categorias">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="404.html">Productos</a></li>
+        <li><a href="404.html">Ofertas</a></li>
+        <li><a href="404.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+<main>
+  <h2>Tu carrito</h2>
+  <table id="carrito-tabla">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Precio u.</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody id="carrito-body"></tbody>
+  </table>
+  <p class="total">Total: $<span id="total">0</span></p>
+
+<button id="btn-pagar" class="btn-primary">Pagar</button>
+
+</main>
+
+<footer><p>Contacto: contacto@miecommerce.com</p></footer>
+
+<script type="module" src="../js/carrito.js"></script>
+</body>
+</html>
+
+
