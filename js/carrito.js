@@ -36,26 +36,31 @@ const botonVaciar = document.getElementById("btn-vaciar");
 
 botonPagar?.addEventListener("click", () => {
   if (carritoActual.length === 0) {
-    alert("Tu carrito está vacío."); // O mejor: SweetAlert2 si ya lo usás
+    Swal.fire("Tu carrito está vacío", "", "info");
     return;
   }
-  // Redirigir a la página de finalizar compra
   window.location.href = "finalizar.html";
 });
 
-// El resto de tu función de vaciar carrito NO se toca.
 botonVaciar?.addEventListener("click", () => {
   if (carritoActual.length === 0) {
-    alert("El carrito ya está vacío.");
+    Swal.fire("El carrito ya está vacío", "", "info");
     return;
   }
-  if (confirm("¿Estás seguro de que querés vaciar el carrito?")) {
-    localStorage.removeItem("carrito");
-    carritoActual = [];
-    renderizarCarrito();
-  }
+  Swal.fire({
+    title: "¿Estás seguro de que querés vaciar el carrito?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Sí, vaciar",
+    cancelButtonText: "Cancelar"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem("carrito");
+      carritoActual = [];
+      renderizarCarrito();
+    }
+  });
 });
-
 
 cuerpoTablaCarrito.addEventListener("click", evento => {
   const boton = evento.target;
@@ -73,5 +78,6 @@ cuerpoTablaCarrito.addEventListener("click", evento => {
 });
 
 renderizarCarrito();
+
 
 
