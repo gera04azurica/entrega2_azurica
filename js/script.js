@@ -1,8 +1,4 @@
-// js/script.js
-import { productos } from "./productos.js";
-
-/* Helpers */
-const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const seleccionar = (selector, contexto = document) => contexto.querySelector(selector);
 
 /* Toast */
 function mostrarToast(msg) {
@@ -15,15 +11,15 @@ function mostrarToast(msg) {
 
 /* Render de tarjetas */
 function pintarProductos() {
-  const cont = $("#contenedor-productos");
-  if (!cont) return;
-  cont.innerHTML = productos.map(p => `
-    <div class="producto" data-id="${p.id}">
-      <img src="${p.imagen}" alt="${p.nombre}">
-      <h3>${p.nombre}</h3>
-      <p class="precio">$${p.precio.toLocaleString("es-UY")}</p>
-      <p class="marca">${p.marca}</p>
-      <a href="pages/producto.html?id=${p.id}" class="detalle">Ver detalle</a>
+  const contenedorProductos = seleccionar("#contenedor-productos");
+  if (!contenedorProductos) return;
+  contenedorProductos.innerHTML = productos.map(producto => `
+    <div class="producto" data-id="${producto.id}">
+      <img src="${producto.imagen}" alt="${producto.nombre}">
+      <h3>${producto.nombre}</h3>
+      <producto class="precio">$${producto.precio.toLocaleString("es-UY")}</producto>
+      <producto class="marca">${producto.marca}</producto>
+      <a href="pages/producto.html?id=${producto.id}" class="detalle">Ver detalle</a>
       <div class="acciones">
         <input type="number" min="1" value="1" class="cantidad">
         <button class="agregar">Añadir</button>
@@ -34,19 +30,19 @@ function pintarProductos() {
 
 /* Eventos de “Agregar” */
 function initListado() {
-  const cont = $("#contenedor-productos");
-  cont.addEventListener("click", e => {
+  const contenedorProductos = seleccionar("#contenedor-productos");
+  contenedorProductos.addEventListener("click", e => {
     if (!e.target.classList.contains("agregar")) return;
-    const card = e.target.closest(".producto");
-    const id   = +card.dataset.id;
-    const prod = productos.find(x => x.id === id);
-    const qty  = Math.max(1, parseInt(card.querySelector(".cantidad").value));
-    const cart = JSON.parse(localStorage.getItem("carrito")) || [];
-    const ex   = cart.find(x => x.id === id);
-    if (ex) ex.cantidad += qty;
-    else cart.push({ id, nombre: prod.nombre, precio: prod.precio, cantidad: qty });
-    localStorage.setItem("carrito", JSON.stringify(cart));
-    mostrarToast(`${qty} × ${prod.nombre} añadido al carrito`);
+    const tarjeta = e.target.closest(".producto");
+    const id   = +tarjeta.dataset.id;
+    const productoSeleccionado = productos.find(x => x.id === id);
+    const cantidadElegida  = Math.max(1, parseInt(tarjeta.querySelector(".cantidad").value));
+    const carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
+    const productoExistente   = carritoActual.find(x => x.id === id);
+    if (productoExistente) productoExistente.cantidad += cantidadElegida;
+    else carritoActual.push({ id, nombre: productoSeleccionado.nombre, precio: productoSeleccionado.precio, cantidad: cantidadElegida });
+    localStorage.setItem("carrito", JSON.stringify(carritoActual));
+    mostrarToast(`${cantidadElegida} × ${productoSeleccionado.nombre} añadido al carrito`);
   });
 }
 

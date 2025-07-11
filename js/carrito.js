@@ -1,24 +1,22 @@
-// js/carrito.js
-const $ = (sel, ctx = document) => ctx.querySelector(sel);
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-const tbody   = $("#carrito-body");
-const totalEl = $("#total");
+let carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
+const cuerpoTablaCarrito = document.getElementById("carrito-body");
+const totalElemento = document.getElementById("total");
 
-function renderCarrito() {
-  carrito = carrito.filter(item => item.cantidad > 0);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  tbody.innerHTML = "";
-  if (carrito.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4" class="empty">Tu carrito está vacío.</td></tr>`;
-    totalEl.textContent = "0";
+function renderizarCarrito() {
+  carritoActual = carritoActual.filter(item => item.cantidad > 0);
+  localStorage.setItem("carrito", JSON.stringify(carritoActual));
+  cuerpoTablaCarrito.innerHTML = "";
+  if (carritoActual.length === 0) {
+    cuerpoTablaCarrito.innerHTML = `<tr><td colspan="4" class="empty">Tu carrito está vacío.</td></tr>`;
+    totalElemento.textContent = "0";
     return;
   }
   let total = 0;
-  carrito.forEach(({ id, nombre, precio, cantidad }) => {
+  carritoActual.forEach(({ id, nombre, precio, cantidad }) => {
     total += precio * cantidad;
-    const tr = document.createElement("tr");
-    tr.dataset.id = id;
-    tr.innerHTML = `
+    const fila = document.createElement("tr");
+    fila.dataset.id = id;
+    fila.innerHTML = `
       <td>${nombre}</td>
       <td>$${precio.toLocaleString("es-UY")}</td>
       <td class="qty">
@@ -28,26 +26,52 @@ function renderCarrito() {
       </td>
       <td class="sub">$${(precio * cantidad).toLocaleString("es-UY")}</td>
     `;
-    tbody.appendChild(tr);
+    cuerpoTablaCarrito.appendChild(fila);
   });
-  totalEl.textContent = total.toLocaleString("es-UY");
+  totalElemento.textContent = total.toLocaleString("es-UY");
 }
 
-const btnPagar = document.getElementById("btn-pagar");
-btnPagar?.addEventListener("click", () => {
-  alert("Redirigiendo a la pasarela de pago…");
+const botonPagar = document.getElementById("btn-pagar");
+const botonVaciar = document.getElementById("btn-vaciar");
+
+botonPagar?.addEventListener("click", () => {
+  if (carritoActual.length === 0) {
+    alert("Tu carrito está vacío.");
+    return;
+  }
+  alert("¡Gracias por tu compra!");
+  localStorage.removeItem("carrito");
+  carritoActual = [];
+  renderizarCarrito();
 });
 
-
-tbody.addEventListener("click", e => {
-  const btn = e.target;
-  if (!btn.classList.contains("mas") && !btn.classList.contains("menos")) return;
-  const tr = btn.closest("tr");
-  const id = +tr.dataset.id;
-  const item = carrito.find(p => p.id === id);
-  if (!item) return;
-  btn.classList.contains("mas") ? item.cantidad++ : item.cantidad--;
-  renderCarrito();
+botonVaciar?.addEventListener("click", () => {
+  if (carritoActual.length === 0) {
+    alert("El carrito ya está vacío.");
+    return;
+  }
+  if (confirm("¿Estás seguro de que querés vaciar el carrito?")) {
+    localStorage.removeItem("carrito");
+    carritoActual = [];
+    renderizarCarrito();
+  }
 });
 
-document.addEventListener("DOMContentLoaded", renderCarrito);
+cuerpoTablaCarrito.addEventListener("click", evento => {
+  const boton = evento.target;
+  if (!boton.classList.contains("mas") && !boton.classList.contains("menos")) return;
+  const fila = boton.closest("tr");
+  const idProducto = Number(fila.dataset.id);
+  const productoEnCarrito = carritoActual.find(producto => producto.id === idProducto);
+  if (!productoEnCarrito) return;
+  if (boton.classList.contains("mas")) {
+    productoEnCarrito.cantidad++;
+  } else {
+    productoEnCarrito.cantidad--;
+  }
+  renderizarCarrito();
+});
+
+renderizarCarrito();
+
+

@@ -1,5 +1,4 @@
- // js/productos.js
-export const productos = [
+const productos = [
   {
     id: 1,
     nombre: "Shampoo Hidratante",
