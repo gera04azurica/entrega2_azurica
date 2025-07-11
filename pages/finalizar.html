@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finalizar pedido</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+  <style>
+    .form-finalizar {
+      max-width: 420px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .form-finalizar input {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    .form-finalizar button {
+      font-size: 1.15rem;
+      font-weight: bold;
+    }
+    @media (max-width: 500px) {
+      .form-finalizar {
+        padding: 15px 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-header">
+      <div class="logo">
+        <a href="../index.html"><img src="../imagenes/logosilea.png" alt="logo"></a>
+      </div>
+      <div class="buscador">
+        <input type="text" placeholder="Buscar productos...">
+      </div>
+      <div class="iconos">
+        <a href="404.html"><img src="../imagenes/usuario.png" alt="usuario"></a>
+        <a href="carrito.html"><img src="../imagenes/carrito.png" alt="carrito"></a>
+        <span class="menu-toggle">&#9776;</span>
+      </div>
+    </div>
+    <nav class="menu-categorias">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="404.html">Productos</a></li>
+        <li><a href="404.html">Ofertas</a></li>
+        <li><a href="404.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2 style="text-align:center;margin-top:2rem;">Finalizar pedido</h2>
+    <form id="form-finalizar" class="form-finalizar" autocomplete="off">
+      <input type="text" name="nombre" placeholder="Nombre y Apellido" required>
+      <input type="text" name="ciudad" placeholder="Ciudad" required>
+      <input type="text" name="direccion" placeholder="Dirección" required>
+      <input type="email" name="mail" placeholder="Email" required>
+      <input type="text" name="telefono" placeholder="Teléfono" required>
+      <input type="text" name="tarjeta" placeholder="Nro. de tarjeta" required maxlength="16">
+      <button type="submit" class="btn-primary">Pagar</button>
+    </form>
+  </main>
+  <footer><p>Contacto: contacto@miecommerce.com</p></footer>
+  <script src="../js/finalizar.js"></script>
+</body>
+</html>

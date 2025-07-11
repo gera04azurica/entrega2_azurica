@@ -36,15 +36,14 @@ const botonVaciar = document.getElementById("btn-vaciar");
 
 botonPagar?.addEventListener("click", () => {
   if (carritoActual.length === 0) {
-    alert("Tu carrito está vacío.");
+    alert("Tu carrito está vacío."); // O mejor: SweetAlert2 si ya lo usás
     return;
   }
-  alert("¡Gracias por tu compra!");
-  localStorage.removeItem("carrito");
-  carritoActual = [];
-  renderizarCarrito();
+  // Redirigir a la página de finalizar compra
+  window.location.href = "finalizar.html";
 });
 
+// El resto de tu función de vaciar carrito NO se toca.
 botonVaciar?.addEventListener("click", () => {
   if (carritoActual.length === 0) {
     alert("El carrito ya está vacío.");
@@ -56,6 +55,7 @@ botonVaciar?.addEventListener("click", () => {
     renderizarCarrito();
   }
 });
+
 
 cuerpoTablaCarrito.addEventListener("click", evento => {
   const boton = evento.target;
